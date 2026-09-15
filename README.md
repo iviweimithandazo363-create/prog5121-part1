@@ -26,6 +26,16 @@ The password must be atleast:
 - Contain a number
 - Contain a special character
 
+## Classes
+### Login
+The Login class handles:
+- Username validation
+- Password validation
+- Cellphone validation
+- User registration
+- 
+
+
 ### Cellphone number
 The cellphone number must:
 - Start with +27

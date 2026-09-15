@@ -12,3 +12,22 @@ The application includes:
 - User login
 - Login status message
 - JUnit testing
+
+## Validation requirements
+### Username
+The username must:
+- Contain an underscore
+- Not be more than 5 characters long
+
+### Password
+The password must be atleast:
+- Be at least 8 characters long
+- Contain a capital letter
+- Contain a number
+- Contain a special character
+
+### Cellphone number
+The cellphone number must:
+- Start with +27
+- Be no more than 12 characters long
+

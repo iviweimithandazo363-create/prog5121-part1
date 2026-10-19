@@ -1,4 +1,4 @@
-# prog5121-part1
+# PROG5121-POE
 ## ChatAppPart 1
 This project is the first part of a simple a simple Java chat application.
 Part 1 focuses on user registration, input validation and login functionality

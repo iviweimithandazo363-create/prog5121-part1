@@ -2,95 +2,91 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
  */
+
 package za.ac.iie.chatapppart1;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * This class contains unit tests for the Login class.
- * The tests check username, password, cellphone,
- * registration and login functionality
- */
 public class LoginTest {
-    
-    //Tests whether the username validation works correctly.
+
     @Test
-    public void testCheckUserName() {
-        
+    public void validUsernameIsAccepted() {
         Login login = new Login();
-        
-        //A valid username must contain an underscore and must not be more than 5 characters long.
-        assertTrue(login.checkUserName("ab_cd"));
-        
-        //This username is invalid beacause it does not contain an underscore.
-        assertFalse(login.checkUserName("abcd"));
+        assertTrue(login.checkUserName("kyl_1"));
     }
-    //Tests whether the password validation works correctly.
+
     @Test
-    public void testCheckPasswordComplexity() {
-        
+    public void invalidUsernameIsRejected() {
         Login login = new Login();
-        
-        //This password is valid beacuse it has atleast 8 characters, a capital letter, a number and a special character
-        assertTrue(login.checkPasswordComplexity("Password1!"));
-        
-        //This password is invalid because it does not meet the password requirements
+        assertFalse(login.checkUserName("kyle!!!!!!!"));
+    }
+
+    @Test
+    public void validPasswordIsAccepted() {
+        Login login = new Login();
+        assertTrue(login.checkPasswordComplexity("Ch&&sec@ke99!"));
+    }
+
+    @Test
+    public void invalidPasswordIsRejected() {
+        Login login = new Login();
         assertFalse(login.checkPasswordComplexity("password"));
-        
     }
-    //Tests whether the cellphone number validation works correctly.
+
     @Test
-    public void testCheckCellPhoneNumber() {
-        
+    public void validCellNumberIsAccepted() {
         Login login = new Login();
-        
-        //Valid South African cellphone number
-        assertTrue(login.checkCellPhoneNumber("+27748747816"));
-        
-        //Invalid because it does not start with +27
-        assertFalse(login.checkCellPhoneNumber("0748747816"));
-        
+        assertTrue(login.checkCellPhoneNumber("+27838968976"));
     }
-    //Tests whether the user registration works correctly
+
     @Test
-    public void testRegisterUser() {
-        
+    public void invalidCellNumberIsRejected() {
         Login login = new Login();
-        
-        //Register a user using valid details.
-        String result = login.registerUser("ab_cd", "Password1!", "+27748747816");
-        
-        //Check that the correct success message is returned.
-        assertEquals("User registered successfully.", result);
+        assertFalse(login.checkCellPhoneNumber("08966553"));
     }
-    //Tests whether the login method accepts the correct details and rejects incorrect details.
+
     @Test
-    public void testLoginUser() {
+    public void validRegistrationSucceeds() {
         Login login = new Login();
-        
-        //First register the user.
-        login.registerUser("ab_cd", "Password1!", "+2774874716");
-        
-        //Correct username and password should successfully login.
-        assertTrue(login.loginUser("ab_cd", "Password1!"));
-        
-        //Incorrect password should not successfully login
-        assertFalse(login.loginUser("abcd","password"));   
-       
+
+        assertEquals(
+                "User registered successfully.",
+                login.registerUser(
+                        "kyl_1",
+                        "Ch&&sec@ke99!",
+                        "+27838968976"));
     }
-    //Test whether the correct login status messages are returned
+
     @Test
-    public void testReturnLoginStatus() {
-        Login login = new Login(); 
-        
-        //Test the successful login message.
-        assertEquals("Login successful. Welcome", login.returnLoginStatus(true));
-        
-        //Test the failed login message
-        assertEquals("Login failed. Please check your username and password.", login.returnLoginStatus(false));
-    
+    public void loginWorksAfterRegistration() {
+        Login login = new Login();
+        login.setName("Kyle", "Smith");
+
+        login.registerUser(
+                "kyl_1",
+                "Ch&&sec@ke99!",
+                "+27838968976");
+
+        assertTrue(login.loginUser("kyl_1", "Ch&&sec@ke99!"));
     }
-      
+
+    @Test
+    public void successfulLoginStatusIsCorrect() {
+        Login login = new Login();
+        login.setName("Kyle", "Smith");
+
+        assertEquals(
+                "Welcome Kyle, Smith it is great to see you again.",
+                login.returnLoginStatus(true));
     }
+
+    @Test
+    public void failedLoginStatusIsCorrect() {
+        Login login = new Login();
+
+        assertEquals(
+                "Username or password incorrect, please try again.",
+                login.returnLoginStatus(false));
+    }
+}
